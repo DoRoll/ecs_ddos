@@ -1,0 +1,17 @@
+*.tsp
+*.txt
+web/.htaccess
+data/**
+.DS_Store
+config/.DS_Store
+config/console.php
+config/db.php
+config/main.php
+config/params.php
+assets/*
+.project
+.settings/*
+.idea/**
+.buildpath
+/index.php
+uploads/*
