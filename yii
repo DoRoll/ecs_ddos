@@ -10,6 +10,7 @@
 
 defined('YII_DEBUG') or define('YII_DEBUG', false);
 defined('WEB_ROOT') or define('WEB_ROOT', dirname(__FILE__));
+defined("TABLE_PREFIX") or define('TABLE_PREFIX', 'ts_');
 
 require(__DIR__ . '/vendor/autoload.php');
 require(__DIR__ . '/vendor/yiisoft/yii2/Yii.php');

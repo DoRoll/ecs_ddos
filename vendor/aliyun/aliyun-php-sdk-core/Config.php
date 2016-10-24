@@ -22,15 +22,9 @@ include_once 'Regions/EndpointConfig.php';
 
 //config sdk auto load path.
 Autoloader::addAutoloadPath("aliyun-php-sdk-ecs");
-Autoloader::addAutoloadPath("aliyun-php-sdk-batchcompute");
-Autoloader::addAutoloadPath("aliyun-php-sdk-sts");
-Autoloader::addAutoloadPath("aliyun-php-sdk-push");
-Autoloader::addAutoloadPath("aliyun-php-sdk-ram");
-Autoloader::addAutoloadPath("aliyun-php-sdk-ubsms");
-Autoloader::addAutoloadPath("aliyun-php-sdk-ubsms-inner");
-Autoloader::addAutoloadPath("aliyun-php-sdk-green");
-Autoloader::addAutoloadPath("aliyun-php-sdk-dm");
-Autoloader::addAutoloadPath("aliyun-php-sdk-iot");
+Autoloader::addAutoloadPath("aliyun-php-sdk-rds");
+Autoloader::addAutoloadPath("aliyun-php-sdk-alidns");
+
 
 //config http proxy	
 define('ENABLE_HTTP_PROXY', FALSE);

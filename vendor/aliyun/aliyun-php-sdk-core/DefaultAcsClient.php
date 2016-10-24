@@ -29,12 +29,15 @@ class DefaultAcsClient implements IAcsClient
 	public function getAcsResponse($request, $iSigner = null, $credential = null, $autoRetry = true, $maxRetryNumber = 3)
 	{
 		$httpResponse = $this->doAction($request, $iSigner, $credential, $autoRetry, $maxRetryNumber);
-		$respObject = $this->parseAcsResponse($httpResponse->getBody(), $request->getAcceptFormat());
+		$objRespObject = $this->parseAcsResponse($httpResponse->getBody(), $request->getAcceptFormat());
 		if(false == $httpResponse->isSuccess())
 		{
-			$this->buildApiException($respObject, $httpResponse->getStatus());
+// 		    if(YII_DEBUG)
+    		    $this->buildApiException($objRespObject, $httpResponse->getStatus());
+// 		    else
+// 		       return null;
 		}
-		return $respObject;
+		return $objRespObject;
 	}
 	
 	public function doAction($request, $iSigner = null, $credential = null, $autoRetry = true, $maxRetryNumber = 3)

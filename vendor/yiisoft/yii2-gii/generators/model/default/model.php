@@ -64,7 +64,7 @@ class <?= $className ?> extends BaseModel
     /**
      * 返回惟一实例
      *
-     * @return Hotword
+     * @return <?= $className ?>
      */
     public static function model( $className = __CLASS__ )
     {

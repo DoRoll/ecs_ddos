@@ -289,14 +289,28 @@ class BaseModel extends \yii\db\ActiveRecord
      * @author xiaoyi
      * @date 2015年10月7日
      */
-    public function getInfoById($_intId=0, $_boolIsObject=true)
+    public function getInfoById($_intId=0, $_boolIsObject=true, $_isNotNull=false)
     {
+        // 当id错误
         if($_intId<=0)
-            return $_boolIsObject ? null : [];
+        {
+            if($_isNotNull)
+                return $_boolIsObject ? null : [];
+            else
+               throw new ErrorException("数据不存在");
+        }
+        
+        // 获取数据并判空
         if($_boolIsObject)
             return $this->findByCondition(['id'=>$_intId])->one();
         else
-            return $this->findByCondition(['id'=>$_intId])->asArray()->one();
+        {
+            $aryData = $this->findByCondition(['id'=>$_intId])->asArray()->one();
+            if($_isNotNull && empty($aryData))
+                throw new ErrorException("数据不存在");
+            else
+               return $aryData;
+        }
     }
     
     /**

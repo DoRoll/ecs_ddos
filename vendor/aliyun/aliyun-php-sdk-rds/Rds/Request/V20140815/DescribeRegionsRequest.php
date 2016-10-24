@@ -81,4 +81,26 @@ class DescribeRegionsRequest extends \RpcAcsRequest
 		$this->queryParameters["OwnerAccount"]=$ownerAccount;
 	}
 	
+	public function setParam($_strKey, $_strValue)
+	{
+	    $this->queryParameters[$_strKey] = $_strValue;
+	}
+	
+	/**
+	 * 设置一个数组
+	 *
+	 * @param array $_aryParams 数据
+	 *
+	 * @author xiaoyi
+	 * @date 2016年10月15日
+	 */
+	public function setParams($_aryParams=[])
+	{
+	    foreach($_aryParams as $strKey => $strValue)
+	    {
+	        $this->queryParameters[$strKey] = $strValue;
+	    }
+	    return true;
+	}
+	
 }
