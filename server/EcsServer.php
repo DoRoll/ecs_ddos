@@ -37,7 +37,6 @@ class EcsServer extends BaseServer
     {
         // 获取所要操作的地域
         $aryEcsConfig = EcsConfig::model()->getInfoById(3, false);
-        define("ECS_ZONE", $aryEcsConfig['zone']);
         
         // 创建一个订单 
         $strMd5= md5(rand(2000,5000).time()."ecs".rand(4000,8000).rand(3000,9000));
@@ -48,8 +47,8 @@ class EcsServer extends BaseServer
         {
             try {
                 // 创建ecs并写入记录
-//                 $strEcsId = EcsCurl::server()->create($strMd5, $aryEcsConfig, $i);
-                $strEcsId = "i-wz95nv2vjn03tju4mnal";
+                $strEcsId = EcsCurl::server()->create($strMd5, $aryEcsConfig, $i);
+//                 $strEcsId = "i-wz95nv2vjn03tju4mnal";
                 $intId = (new EcsList())->addNew($strEcsId, $strMd5, 3, $strMd5);
                 echo "创建ecs成功:id:{$strEcsId}\r\n";
                 
@@ -60,13 +59,12 @@ class EcsServer extends BaseServer
                 echo "本地IP:$strLocalIp\r\n";
                 
                 // 给ecs分配IP
-//                 $strNetIp = EcsCurl::server()->allocateIp($strEcsId);
-                $strNetIp = "120.24.220.175";
+                $strNetIp = EcsCurl::server()->allocateIp($strEcsId);
                 EcsList::model()->updateNetIp($intId, $strNetIp);
                 echo "网络Ip:{$strNetIp}\r\n";
                 
                 // 增加RDS白名单
-                $this->addRdsIpList($aryEcsConfig['rds'], $strLocalIp);
+//                 $this->addRdsIpList($aryEcsConfig['rds'], $strLocalIp);
                 
                 // 启动ECS
                 $aryTemp[] = ['ecs_id'=>$strEcsId, 'id'=>$intId, 'net_ip'=>$strNetIp];

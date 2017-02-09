@@ -7,25 +7,15 @@
 
 namespace app\server;
 
-class IsoServer extends BaseServer
+class RdsServer extends BaseServer
 {
     /**
      * 返回惟一实例
      *
-     * @return IsoServer
+     * @return RdsServer
      */
     public static function server( $className = __CLASS__ )
     {
         return parent::server($className);
-    }
-    
-    /**
-     * 创建一个镜像
-     * 
-     * @author xiaoyi
-     * @date 2016年10月24日
-     */
-    public function create()
-    {
     }
 }

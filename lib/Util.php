@@ -1,5 +1,5 @@
 <?php
-namespace app\lib\util;
+namespace app\lib;
 
 /**
  * 基类
@@ -214,5 +214,25 @@ class Util
             }
         }
         return true;
+    }
+    
+    /**
+     * 生成随机数
+     * 
+     * @param int $_intLength 长度
+     *
+     * @author xiaoyi
+     * @date 2016年10月25日
+     */
+    public static function batch($_intLength)
+    {
+        $strCard = "";
+        $strPol = "1234567890ABCDEFGHJKLMNPQRSTUVWXYZ";
+        $max = strlen($strPol)-1;
+        for($i=0; $i<$_intLength; $i++)
+        {
+            $strCard .= $strPol[rand(0, $max)];
+        }
+        return $strCard;
     }
 }

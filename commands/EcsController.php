@@ -10,9 +10,10 @@ namespace app\commands;
 use yii\console\Controller;
 use DefaultProfile;
 use DefaultAcsClient;
-// use Ecs\Request\V20140526\DescribeRegionsRequest;
-use Rds\Request\V20140815\DescribeRegionsRequest;
+use Ecs\Request\V20140526\DescribeRegionsRequest;
+// use Rds\Request\V20140815\DescribeRegionsRequest;
 use app\server\EcsServer;
+use Yii;
 
 class EcsController extends Controller
 {
@@ -43,7 +44,7 @@ class EcsController extends Controller
     
     public function actionCreate()
     {
-           EcsServer::server()->create(1);
+           EcsServer::server()->create(2);
 //         $objClientProfile = DefaultProfile::getProfile("cn-shenzhen-a", "", "");
 //         $client = new DefaultAcsClient($objClientProfile);
 //         $objRequest = new DescribeRegionsRequest();
@@ -80,28 +81,53 @@ class EcsController extends Controller
     
     public function actionDelete()
     {
-        $objClientProfile = DefaultProfile::getProfile("cn-shenzhen", "", "");
+        $strAccessId = Yii::$app->params['ali']['OSS_ACCESS_ID'];
+        $strKey = Yii::$app->params['ali']['OSS_ACCESS_KEY'];
+        
+        $objClientProfile = DefaultProfile::getProfile("cn-qingdao", $strAccessId, $strKey);
         $client = new DefaultAcsClient($objClientProfile);
         $objRequest = new DescribeRegionsRequest();
         $objRequest->setMethod("GET");
         $objRequest->setActionName("DeleteInstance");
-        $objRequest->setRegionId("cn-shenzhen");
-        $objRequest->setParam("InstanceId", "i-wz95nv2vjn03tju4mnal");
+        $objRequest->setRegionId("cn-qingdao");
+        $objRequest->setParam("InstanceId", "i-m5e7ufaxqdj9m3zm0hbp");
         
         $objResponse = $client->getAcsResponse($objRequest);
         print_r($objResponse);
         exit();
     }
     
-    public function actionDeleteRds()
+    public function actionStop()
     {
-        $objClientProfile = DefaultProfile::getProfile("cn-shenzhen", "", "");
+        $strAccessId = Yii::$app->params['ali']['OSS_ACCESS_ID'];
+        $strKey = Yii::$app->params['ali']['OSS_ACCESS_KEY'];
+    
+        $objClientProfile = DefaultProfile::getProfile("eu-central-1", $strAccessId, $strKey);
+        $client = new DefaultAcsClient($objClientProfile);
+        $objRequest = new DescribeRegionsRequest();
+        $objRequest->setMethod("GET");
+        $objRequest->setActionName("StopInstance");
+        $objRequest->setRegionId("eu-central-1");
+        $objRequest->setParam("InstanceId", "i-gw8akovic0bdtcu86sia");
+    
+        $objResponse = $client->getAcsResponse($objRequest);
+        print_r($objResponse);
+        exit();
+    }
+    
+    public function actionRds()
+    {
+        $strAccessId = Yii::$app->params['ali']['OSS_ACCESS_ID'];
+        $strKey = Yii::$app->params['ali']['OSS_ACCESS_KEY'];
+        $strZone = "cn-shenzhen";
+        
+        $objClientProfile = DefaultProfile::getProfile($strZone, $strAccessId, $strKey);
         $client = new DefaultAcsClient($objClientProfile);
         $objRequest = new DescribeRegionsRequest();
         $objRequest->setMethod("GET");
         $objRequest->setActionName("DeleteDBInstance");
-        $objRequest->setRegionId("cn-shenzhen");
-        $objRequest->setParam("DBInstanceId", "rm-wz911zi63905nga4m");
+        $objRequest->setRegionId($strZone);
+        $objRequest->setParam("DBInstanceId", "rm-wz9f1u31xoq2v8wel");
     
         $objResponse = $client->getAcsResponse($objRequest);
         print_r($objResponse);

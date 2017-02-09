@@ -50,6 +50,9 @@ class RdsCurl extends BaseCurl
     
     /**
      * 设置白名单IP
+     * 
+     * @param string $_strIp ip
+     * @param string $_strRdsId rdsID
      *
      * @author xiaoyi
      * @date 2016年10月16日
@@ -59,5 +62,46 @@ class RdsCurl extends BaseCurl
         $aryParam = ['DBInstanceId'=> $_strRdsId, 'SecurityIps'=>$_strIp];
         $aryResult = $this->getResult("ModifySecurityIps", $aryParam);
         return true;
+    }
+    
+    /**
+     * 查询审计sql日志
+     * 
+     * @param string $_strRdsId 实例ID
+     * @param number $_intBeginTime 开始时间
+     * @param number $_intEndTime 结束时间
+     * @param number $_intPage 当前页数
+     *
+     * @author xiaoyi
+     * @date 2016年11月2日
+     */
+    public function getSqlLog($_strRdsId="", $_intBeginTime=0, $_intEndTime=0, $_intPage=1)
+    {
+        date_default_timezone_set("Etc/GMT");
+        $aryParam = [
+                'DBInstanceId' => $_strRdsId,
+                'StartTime' => date("Y-m-d", $_intBeginTime)."T".date("H:i:s", $_intBeginTime)."Z",
+                'EndTime' => date("Y-m-d", $_intEndTime)."T".date("H:i:s", $_intEndTime)."Z",
+                'PageSize' => 100,
+                'PageNumber' => $_intPage
+//                 'Form' => "File",
+        ];
+        $aryResult = $this->getResult("DescribeSQLLogRecords", $aryParam);
+        date_default_timezone_set('Asia/Shanghai');
+        return $aryResult;
+    }
+    
+    /**
+     * 日志
+     * 
+     * @param string $_strRdsId
+     *
+     * @author xiaoyi
+     * @date 2016年11月3日
+     */
+    public function logFile($_strRdsId="")
+    {
+        $aryResult = $this->getResult("DescribeSQLLogFiles", ['DBInstanceId'=>$_strRdsId]);
+        return $aryResult['Items']['LogFile'];
     }
 }
